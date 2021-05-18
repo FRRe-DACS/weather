@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/FRRe-DACS/weather.svg?branch=main)](https://travis-ci.com/FRRe-DACS/weather)
+
 # Weather service
 
 ## Build
