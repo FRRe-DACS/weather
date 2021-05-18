@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  dacs-db:
+    image: postgres
+    ports:
+     - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=dacs
+      - POSTGRES_USER=dacs
+      - POSTGRES_DB=dacs
+    volumes:
+      - postgres_dacs:/var/lib/postgresql/data
+volumes:
+  postgres_dacs:
