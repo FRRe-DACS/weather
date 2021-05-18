@@ -16,10 +16,13 @@
 package ar.edu.utn.frre.dacs.weather.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,10 +53,31 @@ public class WeatherController {
 	public ResponseEntity<List<Weather>> getWeathers() {
 		return ResponseEntity.ok(repository.findAll());
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Weather> getWeather(@PathVariable Long id) {
+		Optional<Weather> found = repository.findById(id);
+		if (!found.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(found.get());
+	}
 	
 	@PostMapping("")
 	public ResponseEntity<Weather> createWeather(@RequestBody Weather request) {
 		Weather created = repository.save(request);
 		return ResponseEntity.ok(created);
 	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Weather> deleteWeather(@PathVariable Long id) {
+		Optional<Weather> found = repository.findById(id);
+		if (!found.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		Weather toDelete = found.get();
+		repository.delete(toDelete);
+		return ResponseEntity.ok(toDelete);
+	}
+
 }
