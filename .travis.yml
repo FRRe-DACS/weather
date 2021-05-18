@@ -1,1 +1,13 @@
 language: java
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+services:
+  - docker
+
+script:
+  - ./gradlew clean build
+  - docker build -t weather:$TRAVIS_BUILD_NUMBER -f single-stage.dockerfile .
